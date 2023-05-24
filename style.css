@@ -1,0 +1,18 @@
+.lastOperationScreen {
+    height: 50px;
+    width: 250px;
+    background-color: lightblue;
+}
+
+.currentOperationScreen {
+    height: 100px;
+    width: 250px;
+    background-color: blanchedalmond;
+}
+
+
+.buttonContainer {
+    display: grid;
+    grid-template-columns: repeat(4, 0fr)
+}
+
