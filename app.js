@@ -5,7 +5,6 @@ const buttons = document.querySelectorAll('button');
 const operatorBtns = document.querySelectorAll('.operation');
 //addition, subtraction, multiplication, division 
 
-
 if (operatorBtns === '+') {
     add(n1, n2);
 } else if (operatorBtns === '-') {
@@ -36,3 +35,11 @@ function divide(n1, n2) {
 }
 //addEventListeners to buttons;
 
+buttons.forEach(button => {
+    button.addEventListener('click', (e) => {
+        const value = e.target.dataset.value;
+        console.log(value);
+    })
+})
+
+currentOpScreen.textContent = value
