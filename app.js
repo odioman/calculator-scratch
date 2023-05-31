@@ -40,39 +40,64 @@ function operate(operator, num1, num2) {
 //addEventListeners to buttons;
 
 buttons.forEach(button => {
-    button.addEventListener('click', (e) => {
-        const value = e.target.dataset.value;
+    button.addEventListener('click', getPartsReady)
+})
+        
+
+function getPartsReady(event) {
+        const value = event.currentTarget.dataset.value;
         console.log(value);
         currentOpScreen.textContent += value;
 
         if (value === '=') {
             if (currentOpScreen.textContent.includes('÷')) {
+                //split the string into two parts
                 const equation = currentOpScreen.textContent.split('÷')
+                //make sure element [1] doesn't have an equation sign attached to it
                 const numberWithoutEqSign = equation[1].split('=')
                 console.log(numberWithoutEqSign)
+                //element without equation symbol
                 const equation1 = numberWithoutEqSign[0]
+                //the actual mathematics of the operation
                 operate('÷', equation[0], equation1)
+                //append to last screen to see the equation just performed
                 lastOpScreen.textContent = `${equation[0]} ÷ ${equation1}`
+                cantClick();
             } else if (currentOpScreen.textContent.includes('+')) {
                 const equation = currentOpScreen.textContent.split('+')
                 const numberWithoutEqSign = equation[1].split('=') 
                 const equation1 = numberWithoutEqSign[0]
                 operate('+', equation[0], equation1)
                 lastOpScreen.textContent = `${equation[0]} + ${equation1}`
+                cantClick();
             } else if (currentOpScreen.textContent.includes('×')) {
                 const equation = currentOpScreen.textContent.split('×')
                 const numberWithoutEqSign = equation[1].split('=');
                 const equation1 = numberWithoutEqSign[0]
                 operate('×', equation[0], equation1)
                 lastOpScreen.textContent = `${equation[0]} × ${equation1}`
+                cantClick();
             } else if (currentOpScreen.textContent.includes('-')) {
                 const equation = currentOpScreen.textContent.split('-');
                 const numberWithoutEqSign = equation[1].split('=');
                 const equation1 = numberWithoutEqSign[0];
                 operate('-', equation[0], equation1);
                 lastOpScreen.textContent = `${equation[0]} - ${equation1}`
+                cantClick();
             }
+        } else if (value === '') {
+            //takes away last entry 
+            currentOpScreen.textContent = currentOpScreen.textContent.slice(0,-1);
+        } else if (value === 'clear') {
+            currentOpScreen.textContent = '';
+            lastOpScreen.textContent = '';
         }
-    })
-})
 
+    }
+
+function cantClick() {
+    operatorBtns.removeEventListener('click', console.log('working'));
+    console.log('cantClick');
+}
+
+  
