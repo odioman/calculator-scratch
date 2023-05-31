@@ -5,16 +5,6 @@ const buttons = document.querySelectorAll('button');
 const operatorBtns = document.querySelectorAll('.operation');
 //addition, subtraction, multiplication, division 
 
-if (operatorBtns === '+') {
-    add(n1, n2);
-} else if (operatorBtns === '-') {
-    subtract(n1, n2);
-} else if (operatorBtns === '×') {
-    multiply(n1, n2);
-} else if (operatorBtns === '÷') {
-    divide(n1, n2);
-}
-
 function add(n1, n2) {
     return n1 + n2
 }
@@ -58,21 +48,29 @@ buttons.forEach(button => {
         if (value === '=') {
             if (currentOpScreen.textContent.includes('÷')) {
                 const equation = currentOpScreen.textContent.split('÷')
-                const numberWithoutEqSign = equation[1].split('')
+                const numberWithoutEqSign = equation[1].split('=')
+                console.log(numberWithoutEqSign)
                 const equation1 = numberWithoutEqSign[0]
                 operate('÷', equation[0], equation1)
                 lastOpScreen.textContent = `${equation[0]} ÷ ${equation1}`
-                console.log(equation);
             } else if (currentOpScreen.textContent.includes('+')) {
                 const equation = currentOpScreen.textContent.split('+')
-                const numberWithoutEqSign = equation[1].split('') 
+                const numberWithoutEqSign = equation[1].split('=') 
                 const equation1 = numberWithoutEqSign[0]
                 operate('+', equation[0], equation1)
-                lastOpScreen.textContent = `${equation[0]} + ${equation[1]}`
+                lastOpScreen.textContent = `${equation[0]} + ${equation1}`
             } else if (currentOpScreen.textContent.includes('×')) {
-                const equation = currentOpScreen.textContent.split('')
-                operate('×', equation[0], equation[2])
-                lastOpScreen.textContent = `${equation[0]} × ${equation[2]}`
+                const equation = currentOpScreen.textContent.split('×')
+                const numberWithoutEqSign = equation[1].split('=');
+                const equation1 = numberWithoutEqSign[0]
+                operate('×', equation[0], equation1)
+                lastOpScreen.textContent = `${equation[0]} × ${equation1}`
+            } else if (currentOpScreen.textContent.includes('-')) {
+                const equation = currentOpScreen.textContent.split('-');
+                const numberWithoutEqSign = equation[1].split('=');
+                const equation1 = numberWithoutEqSign[0];
+                operate('-', equation[0], equation1);
+                lastOpScreen.textContent = `${equation[0]} - ${equation1}`
             }
         }
     })
