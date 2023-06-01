@@ -42,6 +42,10 @@ function operate(operator, num1, num2) {
 buttons.forEach(button => {
     button.addEventListener('click', getPartsReady)
 })
+
+operatorBtns.forEach(operatorBtn => {
+    operatorBtn.addEventListener('click', getPartsReady);
+})
         
 
 function getPartsReady(event) {
@@ -62,28 +66,24 @@ function getPartsReady(event) {
                 operate('÷', equation[0], equation1)
                 //append to last screen to see the equation just performed
                 lastOpScreen.textContent = `${equation[0]} ÷ ${equation1}`
-                cantClick();
             } else if (currentOpScreen.textContent.includes('+')) {
                 const equation = currentOpScreen.textContent.split('+')
                 const numberWithoutEqSign = equation[1].split('=') 
                 const equation1 = numberWithoutEqSign[0]
                 operate('+', equation[0], equation1)
                 lastOpScreen.textContent = `${equation[0]} + ${equation1}`
-                cantClick();
             } else if (currentOpScreen.textContent.includes('×')) {
                 const equation = currentOpScreen.textContent.split('×')
                 const numberWithoutEqSign = equation[1].split('=');
                 const equation1 = numberWithoutEqSign[0]
                 operate('×', equation[0], equation1)
                 lastOpScreen.textContent = `${equation[0]} × ${equation1}`
-                cantClick();
             } else if (currentOpScreen.textContent.includes('-')) {
                 const equation = currentOpScreen.textContent.split('-');
                 const numberWithoutEqSign = equation[1].split('=');
                 const equation1 = numberWithoutEqSign[0];
                 operate('-', equation[0], equation1);
                 lastOpScreen.textContent = `${equation[0]} - ${equation1}`
-                cantClick();
             }
         } else if (value === '') {
             //takes away last entry 
@@ -92,12 +92,15 @@ function getPartsReady(event) {
             currentOpScreen.textContent = '';
             lastOpScreen.textContent = '';
         }
+}
 
-    }
-
+/*
 function cantClick() {
-    operatorBtns.removeEventListener('click', console.log('working'));
+    operatorBtns.forEach(operatorBtn => operatorBtn.removeEventListener('click', getPartsReady));
     console.log('cantClick');
 }
+*/
+
+
 
   
