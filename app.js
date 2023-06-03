@@ -3,6 +3,9 @@ const lastOpScreen = document.querySelector('.lastOperationScreen');
 const currentOpScreen = document.querySelector('.currentOperationScreen');
 const buttons = document.querySelectorAll('button');
 const operatorBtns = document.querySelectorAll('.operation');
+const pointBtn = document.querySelector('#point');
+let isDecimal = false;
+
 //addition, subtraction, multiplication, division 
 
 function add(n1, n2) {
@@ -46,7 +49,13 @@ buttons.forEach(button => {
 operatorBtns.forEach(operatorBtn => {
     operatorBtn.addEventListener('click', getPartsReady);
 })
-        
+
+function decimal() {
+    if (currentOpScreen.textContent.includes('.')) {       
+        console.log('decimal called');
+        return  
+    } 
+}
 
 function getPartsReady(event) {
         const value = event.currentTarget.dataset.value;
@@ -66,24 +75,28 @@ function getPartsReady(event) {
                 operate('÷', equation[0], equation1)
                 //append to last screen to see the equation just performed
                 lastOpScreen.textContent = `${equation[0]} ÷ ${equation1}`
+                decimal()
             } else if (currentOpScreen.textContent.includes('+')) {
                 const equation = currentOpScreen.textContent.split('+')
                 const numberWithoutEqSign = equation[1].split('=') 
                 const equation1 = numberWithoutEqSign[0]
                 operate('+', equation[0], equation1)
                 lastOpScreen.textContent = `${equation[0]} + ${equation1}`
+                decimal();
             } else if (currentOpScreen.textContent.includes('×')) {
                 const equation = currentOpScreen.textContent.split('×')
                 const numberWithoutEqSign = equation[1].split('=');
                 const equation1 = numberWithoutEqSign[0]
                 operate('×', equation[0], equation1)
                 lastOpScreen.textContent = `${equation[0]} × ${equation1}`
+                decimal()
             } else if (currentOpScreen.textContent.includes('-')) {
                 const equation = currentOpScreen.textContent.split('-');
                 const numberWithoutEqSign = equation[1].split('=');
                 const equation1 = numberWithoutEqSign[0];
                 operate('-', equation[0], equation1);
                 lastOpScreen.textContent = `${equation[0]} - ${equation1}`
+                decimal()
             }
         } else if (value === '') {
             //takes away last entry 
@@ -92,6 +105,7 @@ function getPartsReady(event) {
             currentOpScreen.textContent = '';
             lastOpScreen.textContent = '';
         }
+        decimal()
 }
 
 /*
