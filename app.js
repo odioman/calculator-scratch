@@ -4,7 +4,31 @@ const currentOpScreen = document.querySelector('.currentOperationScreen');
 const buttons = document.querySelectorAll('button');
 const operatorBtns = document.querySelectorAll('.operation');
 const pointBtn = document.querySelector('#point');
+const numberBtns = document.querySelectorAll('.number');
 let isDecimal = false;
+
+
+let currentEquationString = ''
+
+function stringifyEquation(e) {
+    //const numButtonValue = e.target.closest('[date-value]');
+    //currentEquationString += numButtonValue;
+    //console.log(numButtonValue);
+}
+
+stringifyEquation()
+
+numberBtns.forEach(number => {
+    number.addEventListener('click', () => {
+        digitPressed(number.textContent)
+    })
+})
+
+function digitPressed(digit) {
+    currentOpScreen.textContent += digit;
+    console.log("digit pressed: ", digit);
+}
+
 
 //addition, subtraction, multiplication, division 
 
@@ -43,7 +67,7 @@ function operate(operator, num1, num2) {
 //addEventListeners to buttons;
 
 //two event listeners for numbers(incl decimals) and operations
-buttons.forEach(button => {
+/*buttons.forEach(button => {
     button.addEventListener('click', getPartsReady)
 })
 
@@ -57,8 +81,8 @@ function decimal() {
         return  
     } 
 }
-
-function getPartsReady(event) {
+*/
+/* function getPartsReady(event) {
         const value = event.currentTarget.dataset.value;
         console.log(value);
         currentOpScreen.textContent += value;
@@ -107,7 +131,7 @@ function getPartsReady(event) {
             lastOpScreen.textContent = '';
         }
         decimal()
-}
+} */
 
 /*
 function cantClick() {
