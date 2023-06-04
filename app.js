@@ -42,6 +42,7 @@ function operate(operator, num1, num2) {
 }
 //addEventListeners to buttons;
 
+//two event listeners for numbers(incl decimals) and operations
 buttons.forEach(button => {
     button.addEventListener('click', getPartsReady)
 })
