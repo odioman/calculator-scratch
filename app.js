@@ -10,15 +10,16 @@ let isDecimal = false;
 
 let currentNumberString = ''
 let numbersArr = [];
-let operatorsArr = [];
 
 function stringifyAndArrEquation() {
     currentNumberString = currentOpScreen.textContent;
     console.log(currentNumberString);
+    //pushes ['9', '9+', '9+1'] - last index is the equation that is needed
     numbersArr.push(currentNumberString);
-    console.log(numbersArr);
-    operatorsArr.forEach(operator => operator.push(operator))
-    console.log(operatorsArr)
+    console.log(numbersArr[numbersArr.length - 1]);
+    //regex keeps decimal numbers together, and splits operators from numbers, works well
+    const split = numbersArr[numbersArr.length - 1].match(/\d+\.\d+|\d+|[^0-9]/g)
+    console.log(split)
 }
 
 numberBtns.forEach(number => {
