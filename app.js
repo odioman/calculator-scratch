@@ -8,15 +8,18 @@ const numberBtns = document.querySelectorAll('.number');
 let isDecimal = false;
 
 
-let currentEquationString = ''
+let currentNumberString = ''
+let numbersArr = [];
+let operatorsArr = [];
 
-function stringifyEquation(e) {
-    //const numButtonValue = e.target.closest('[date-value]');
-    //currentEquationString += numButtonValue;
-    //console.log(numButtonValue);
+function stringifyAndArrEquation() {
+    currentNumberString = currentOpScreen.textContent;
+    console.log(currentNumberString);
+    numbersArr.push(currentNumberString);
+    console.log(numbersArr);
+    operatorsArr.forEach(operator => operator.push(operator))
+    console.log(operatorsArr)
 }
-
-stringifyEquation()
 
 numberBtns.forEach(number => {
     number.addEventListener('click', () => {
@@ -27,8 +30,22 @@ numberBtns.forEach(number => {
 function digitPressed(digit) {
     currentOpScreen.textContent += digit;
     console.log("digit pressed: ", digit);
+    stringifyAndArrEquation()
+    
 }
 
+operatorBtns.forEach(operator => {
+    operator.addEventListener('click', () => {
+        operatorPressed(operator.textContent)
+    })
+})
+
+function operatorPressed(operator) {
+    currentOpScreen.textContent += operator;
+    console.log("operator pressed: ", operator);
+    stringifyAndArrEquation()
+
+}
 
 //addition, subtraction, multiplication, division 
 
