@@ -11,43 +11,22 @@ let isDecimal = false;
 
 
 let currentNumberString = ''
-let numbersArr = [];
-let tempSolutionArray = [];
-let finalSolutionArray = [];
+let tempSolution = '';
+
 
 function stringifyAndArrEquation() {
     currentNumberString = currentOpScreen.textContent;
     console.log(currentNumberString);
-    //pushes ['9', '9+', '9+1'] - last index is the equation that is needed
-    numbersArr.push(currentNumberString);
-    console.log(numbersArr[numbersArr.length - 1]);
     //regex keeps decimal numbers together, and splits operators from numbers, works well
-    const split = numbersArr[numbersArr.length - 1].match(/\d+\.\d+|\d+|[^0-9]/g)
-    console.log(split)
+    const currentEquation = currentNumberString.match(/\d+\.\d+|\d+|[^0-9]/g)
+    console.log(currentEquation)
     //loop over the parts of split
-    for (let i=0; i < split.length; i++) {
-        if (split.includes('=')) {
-            if (split[i].includes('÷')) {
-                //find the equation surrounding the division symbol
-                const splitEquationDiv = `${split[i-1]} ${split[i]} ${split[i+1]}`
-                console.log('splitEquationDiv: ', splitEquationDiv);
-                //put it in the operate function to get the result, call operate function
-                operate(split[i], split[i-1], split[i+1]);
-                console.log('tempSolutionArray: ', tempSolutionArray);
-                //come up with final solution, need a better way to do this, as what if there is more than one element in tempSolutionArray
-                finalSolutionArray.push(operate(split[i], tempSolutionArray[0], split[i+1]))
-                console.log("finalSolutionArray: ", finalSolutionArray);
-            } else if (split[i].includes('×')) {
-                const splitEquationMul = `${split[i-1]} ${split[i]} ${split[i+1]}`
-                console.log('splitEquationMul: ', splitEquationMul);
-                operate(split[i], split[i-1], split[i+1]);
-                console.log('tempSolutionArray: ', tempSolutionArray);
-            } 
-            
-            //else if (split[i].includes(('+'||'-'))) { 
-              //  const splitEquationforAddSub = `${split[i-1]} ${split[i]} ${split[i+1]}`
-                //console.log('splitEquationforAddSub: ', splitEquationforAddSub);
-            //}
+    if (currentEquation.includes('=')) {
+        if (currentEquation.includes('÷')||currentEquation.includes('×') || currentEquation.includes('+') || currentEquation.includes('-')) {
+            //put it in the operate function to get the result, call operate function
+            operate(currentEquation[1], currentEquation[0], currentEquation[2]);
+            console.log('tempSolution: ', tempSolution);
+            currentOpScreen.textContent = tempSolution;
         }
     }
 }
@@ -101,17 +80,20 @@ function divide(n1, n2) {
 }
 
 function operate(operator, num1, num2) {
+    console.log("operate called")
     const n1 = Number(num1);
     const n2 = Number(num2);
     if (operator === '÷') {
-        tempSolutionArray.push(divide(n1, n2))
+        tempSolution = (divide(n1, n2))
         console.log(divide(n1, n2))
+        currentNumberString = tempSolution;
+        console.log("operate's currentNumberString: ", currentNumberString)
     } else if (operator === '×') {
-        tempSolutionArray.push(multiply(n1, n2))
+        tempSolution = (multiply(n1, n2))
     } else if (operator === '+') {
-        tempSolutionArray.push(add(n1, n2))
+        tempSolution = (add(n1, n2))
     } else if (operator === '-') {
-        tempSolutionArray.push(subtract(n1, n2))
+        tempSolution = (subtract(n1, n2))
     }
 }
 
