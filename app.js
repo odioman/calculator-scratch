@@ -34,6 +34,7 @@ function stringifyAndArrEquation() {
                 //put it in the operate function to get the result, call operate function
                 operate(split[i], split[i-1], split[i+1]);
                 console.log('tempSolutionArray: ', tempSolutionArray);
+                //come up with final solution, need a better way to do this, as what if there is more than one element in tempSolutionArray
                 finalSolutionArray.push(operate(split[i], tempSolutionArray[0], split[i+1]))
                 console.log("finalSolutionArray: ", finalSolutionArray);
             } else if (split[i].includes('×')) {
@@ -43,14 +44,15 @@ function stringifyAndArrEquation() {
                 console.log('tempSolutionArray: ', tempSolutionArray);
             } 
             
-            else if (split[i].includes(('+'||'-'))) { 
-                const splitEquationforAddSub = `${split[i-1]} ${split[i]} ${split[i+1]}`
-                console.log('splitEquationforAddSub: ', splitEquationforAddSub);
-            }
+            //else if (split[i].includes(('+'||'-'))) { 
+              //  const splitEquationforAddSub = `${split[i-1]} ${split[i]} ${split[i+1]}`
+                //console.log('splitEquationforAddSub: ', splitEquationforAddSub);
+            //}
         }
     }
 }
 
+//append numbers to currentOpScreen
 numberBtns.forEach(number => {
     number.addEventListener('click', () => {
         digitPressed(number.textContent)
@@ -64,6 +66,7 @@ function digitPressed(digit) {
     
 }
 
+//append operators to currentOpScreen
 operatorBtns.forEach(operator => {
     operator.addEventListener('click', () => {
         operatorPressed(operator.textContent)
