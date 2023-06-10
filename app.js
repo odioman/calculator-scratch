@@ -6,6 +6,8 @@ const operatorBtns = document.querySelectorAll('.operation');
 const pointBtn = document.querySelector('#point');
 const numberBtns = document.querySelectorAll('.number');
 const equalsBtn = document.querySelector('.equals');
+const clearBtn = document.querySelector('#all-clear')
+const backspaceBtn = document.querySelector('#backspace')
 
 let isDecimal = false;
 
@@ -14,7 +16,7 @@ let currentNumberString = ''
 let tempSolution = '';
 
 
-function stringifyAndArrEquation() {
+function stringifyEquation() {
     currentNumberString = currentOpScreen.textContent;
     console.log(currentNumberString);
     //regex keeps decimal numbers together, and splits operators from numbers, works well
@@ -27,6 +29,7 @@ function stringifyAndArrEquation() {
             operate(currentEquation[1], currentEquation[0], currentEquation[2]);
             console.log('tempSolution: ', tempSolution);
             currentOpScreen.textContent = tempSolution;
+            lastOpScreen.textContent = currentNumberString;
         }
     }
 }
@@ -41,7 +44,7 @@ numberBtns.forEach(number => {
 function digitPressed(digit) {
     currentOpScreen.textContent += digit;
     console.log("digit pressed: ", digit);
-    stringifyAndArrEquation()
+    stringifyEquation()
     
 }
 
@@ -55,9 +58,24 @@ operatorBtns.forEach(operator => {
 function operatorPressed(operator) {
     currentOpScreen.textContent += operator;
     console.log("operator pressed: ", operator);
-    stringifyAndArrEquation()
+    stringifyEquation()
 
 }
+
+function allClear() {
+    currentOpScreen.textContent = '';
+    lastOpScreen.textContent = '';
+}
+
+//clear the calculator of all text
+clearBtn.addEventListener('click', allClear);
+
+function backspace() {
+    currentOpScreen.textContent = currentOpScreen.textContent.slice(0,-1);
+}
+
+//takes away last entry on currentOpScreen
+backspaceBtn.addEventListener('click', backspace);
 
 //addition, subtraction, multiplication, division 
 
