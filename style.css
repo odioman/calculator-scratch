@@ -1,18 +1,82 @@
+* {
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
 .lastOperationScreen {
-    height: 50px;
+    height: 100px;
     width: 250px;
     background-color: lightblue;
+    margin: auto;
+    border: 3px solid black;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Space Mono', serif;
+    font-size: 2em;
+    text-align: right;
 }
 
 .currentOperationScreen {
     height: 100px;
     width: 250px;
-    background-color: blanchedalmond;
+    background-color: #bee2eb;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid black;
+    font-family: 'Space Mono', serif;
+    font-size: 2em;
+    text-align: right;
 }
 
 
 .buttonContainer {
     display: grid;
-    grid-template-columns: repeat(4, 0fr)
+    grid-template-columns: repeat(4, 0fr);
+    gap: 5px;
+    padding: 10px;
+    border: 2px solid black;
+    height: 350px;
+    width: 250px;
+    
 }
 
+.calculatorContainer {
+    background-color: grey;
+}
+
+button {
+    padding: 10px;
+    font-size: 1.5em;
+}
+
+.number:hover {
+    background-color: green;
+    color: white;
+}
+
+.operation:hover {
+    background-color: green;
+    color: white;
+}
+
+.delete {
+    grid-column: span 2;
+    padding: 10px;
+}
+
+#all-clear {
+    background-color: rgb(218, 35, 35)
+}
+
+#all-clear:hover {
+    color: white;
+}
+
+#backspace {
+    background-color:rgb(255, 170, 170)
+}
+
+#backspace:hover {
+    color: white;
+}
