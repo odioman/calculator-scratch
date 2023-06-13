@@ -9,7 +9,7 @@ const equalsBtn = document.querySelector('.equals');
 const clearBtn = document.querySelector('#all-clear')
 const backspaceBtn = document.querySelector('#backspace')
 
-let isDecimal = false;
+let decimalAllowed = true;
 
 
 let currentNumberString = ''
@@ -32,6 +32,17 @@ function stringifyEquation() {
             lastOpScreen.textContent = currentNumberString;
         }
     }
+}
+
+// allow one decimal per number
+if (decimalAllowed) {
+    pointBtn.addEventListener('click', stringifyEquation) 
+    //decimalAllowed turned to false to prevent more decimals
+    decimalAllowed = false;
+
+} else if (currentEquation.includes('+'||'-'||'×'||'÷')) {
+    console.log("second decimal")
+    decimalAllowed = true;
 }
 
 //append numbers to currentOpScreen
