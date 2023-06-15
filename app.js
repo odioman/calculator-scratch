@@ -9,12 +9,8 @@ const equalsBtn = document.querySelector('.equals');
 const clearBtn = document.querySelector('#all-clear')
 const backspaceBtn = document.querySelector('#backspace')
 
-let decimalAllowed = true;
-
-
 let currentNumberString = ''
 let tempSolution = '';
-
 
 function stringifyEquation() {
     currentNumberString = currentOpScreen.textContent;
@@ -35,15 +31,7 @@ function stringifyEquation() {
 }
 
 // allow one decimal per number
-if (decimalAllowed) {
-    pointBtn.addEventListener('click', stringifyEquation) 
-    //decimalAllowed turned to false to prevent more decimals
-    decimalAllowed = false;
 
-} else if (currentEquation.includes('+'||'-'||'×'||'÷')) {
-    console.log("second decimal")
-    decimalAllowed = true;
-}
 
 //append numbers to currentOpScreen
 numberBtns.forEach(number => {
@@ -52,10 +40,21 @@ numberBtns.forEach(number => {
     })
 })
 
+let decimalCount = 0;
+
 function digitPressed(digit) {
     currentOpScreen.textContent += digit;
     console.log("digit pressed: ", digit);
     //validation for decimal here
+    if (currentOpScreen.textContent === digit + '.') {
+        decimalCount++
+        console.log("decimalCount:", decimalCount)
+    }
+    if (currentOpScreen.textContent == '.' && decimalCount > 1) {
+        return;
+    }
+
+  
     stringifyEquation()
     
 }
@@ -71,6 +70,11 @@ function operatorPressed(operator) {
     currentOpScreen.textContent += operator;
     console.log("operator pressed: ", operator);
     //validation for one operator here
+
+    //reset decimalCount if operator pressed
+    if (currentOpScreen.textContent == operator) {
+        decimalCount = 0;
+    }
     stringifyEquation()
 
 }
