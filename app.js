@@ -55,6 +55,7 @@ numberBtns.forEach(number => {
 function digitPressed(digit) {
     currentOpScreen.textContent += digit;
     console.log("digit pressed: ", digit);
+    //validation for decimal here
     stringifyEquation()
     
 }
@@ -69,6 +70,7 @@ operatorBtns.forEach(operator => {
 function operatorPressed(operator) {
     currentOpScreen.textContent += operator;
     console.log("operator pressed: ", operator);
+    //validation for one operator here
     stringifyEquation()
 
 }
