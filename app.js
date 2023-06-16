@@ -45,19 +45,9 @@ let decimalCount = 0;
 function digitPressed(digit) {
     currentOpScreen.textContent += digit;
     console.log("digit pressed: ", digit);
-    //validation for decimal here
-    if (currentOpScreen.textContent === digit + '.') {
-        decimalCount++
-        console.log("decimalCount:", decimalCount)
-    }
-    if (currentOpScreen.textContent == '.' && decimalCount > 1) {
-        return;
-    }
-
-  
     stringifyEquation()
-    
 }
+
 
 //append operators to currentOpScreen
 operatorBtns.forEach(operator => {
@@ -70,13 +60,24 @@ function operatorPressed(operator) {
     currentOpScreen.textContent += operator;
     console.log("operator pressed: ", operator);
     //validation for one operator here
-
-    //reset decimalCount if operator pressed
-    if (currentOpScreen.textContent == operator) {
-        decimalCount = 0;
-    }
+    
     stringifyEquation()
 
+}
+
+function appendDecimal() {
+    currentOpScreen.textContent += '.';
+}
+
+pointBtn.addEventListener('click', appendDecimal);
+
+const validValue = /^(\d+(\.\d*)?)?$/.test(currentOpScreen.textContent)
+
+if (!validValue) {
+    console.log("validValue: ", validValue)
+    pointBtn.removeEventListener('click', appendDecimal)
+} else if (currentOpScreen.textContent.includes('+'||'-')) {
+    pointBtn.addEventListener('click', appendDecimal)
 }
 
 function allClear() {
@@ -131,6 +132,29 @@ function operate(operator, num1, num2) {
         tempSolution = (subtract(n1, n2))
     }
 }
+
+
+//keyboard accessbility 
+document.addEventListener('keydown', (event) => {
+    if (event.key >= 0 || event.key <= 9) {
+        currentOpScreen.textContent += event.key 
+    } else if (event.key === 'Backspace') {
+        currentOpScreen.textContent = currentOpScreen.textContent.slice(0,-1)
+    } else if (event.key === 'Delete') {
+        currentOpScreen.textContent = '';
+        lastOpScreen.textContent = '';
+    } else if (event.key === '*') {
+        currentOpScreen.textContent += '×';
+    } else if (event.key === '/') {
+        currentOpScreen.textContent += '÷';
+    } else if (event.key === '+') {
+        currentOpScreen.textContent += event.key;
+    } else if (event.key === '-') {
+        currentOpScreen.textContent += event.key;
+    } else if (event.key === '.') {
+        currentOpScreen.textContent += event.key;
+    }
+ })
 
 
 /* function PEMDAS(inputs){
@@ -326,4 +350,30 @@ equalsKey.addEventListener('click', calculate);
 
 */
 
+/* 
+decimal.addEventListener("click", function() {
+    
+        if (chosenOperator == undefined && resultDisplay.textContent!="") {
+            userInput = undefined;
+            userInput = "."; 
+            resultDisplay.textContent = "";
+            previousEntry.textContent = ""; 
+            previousEntry.textContent = ".";
+        }  
+        
+        else if (previousEntry.textContent.includes(".") && chosenOperator==undefined) {
+        }
+       
+        else if (typeof userInput == "string" && userInput.indexOf(".")!=-1) {
+        }
+
+        else {
+            userInput = userInput + ".";
+            previousEntry.textContent += ".";
+        }
+    
+    decimal.blur();
+});
+
+*/
   
