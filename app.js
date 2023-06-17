@@ -3,29 +3,26 @@ const lastOpScreen = document.querySelector('.lastOperationScreen');
 const currentOpScreen = document.querySelector('.currentOperationScreen');
 const buttons = document.querySelectorAll('button');
 const operatorBtns = document.querySelectorAll('.operation');
-const pointBtn = document.querySelector('#point');
+const pointBtn = document.querySelector('.point');
 const numberBtns = document.querySelectorAll('.number');
 const equalsBtn = document.querySelector('.equals');
 const clearBtn = document.querySelector('#all-clear')
 const backspaceBtn = document.querySelector('#backspace')
 
-let currentNumberString = ''
+let currentEquationString = ''
 let tempSolution = '';
 
 function stringifyEquation() {
-    currentNumberString = currentOpScreen.textContent;
-    console.log(currentNumberString);
-    //regex keeps decimal numbers together, and splits operators from numbers, works well
-    const currentEquation = currentNumberString.match(/\d+\.\d+|\d+|[^0-9]/g)
-    console.log(currentEquation)
+    currentEquationString = currentOpScreen.textContent;
+    //regex keeps decimal Equations together, and splits operators from Equations, works well
+    const currentEquation = currentEquationString.match(/\d+\.\d+|\d+|[^0-9]/g)
     //loop over the parts of split
     if (currentEquation.includes('=')) {
         if (currentEquation.includes('÷')||currentEquation.includes('×') || currentEquation.includes('+') || currentEquation.includes('-')) {
             //put it in the operate function to get the result, call operate function
             operate(currentEquation[1], currentEquation[0], currentEquation[2]);
-            console.log('tempSolution: ', tempSolution);
-            currentOpScreen.textContent = tempSolution;
-            lastOpScreen.textContent = currentNumberString;
+            currentOpScreen.textContent = tempSolution.toFixed(7);
+            lastOpScreen.textContent = currentEquationString;
         }
     }
 }
@@ -44,7 +41,6 @@ let decimalCount = 0;
 
 function digitPressed(digit) {
     currentOpScreen.textContent += digit;
-    console.log("digit pressed: ", digit);
     stringifyEquation()
 }
 
@@ -57,35 +53,54 @@ operatorBtns.forEach(operator => {
 })
 
 function operatorPressed(operator) {
-    currentOpScreen.textContent += operator;
-    console.log("operator pressed: ", operator);
-    //validation for one operator here
-    
+    //TODO: add validation for operator, if it is a number add operator to screen, if it is not a number don't do anything 
+    //split currentEquationString
+    const splitCurEqString = currentEquationString.match(/\d+\.\d+|\d+|[^0-9]/g)
+    //get last item is an operator
+    const lastItem = splitCurEqString[splitCurEqString.length - 1]
+    //check if lastItem is an operator
+    const operatorCheck = lastItem.includes('+')|| lastItem.includes('-')|| lastItem.includes('÷')||lastItem.includes('×')
+    //if lastItem is an operator, do nothing
+    if (operatorCheck) {
+        return
+    } else {
+        currentOpScreen.textContent += operator;
+    }
     stringifyEquation()
-
 }
 
 function appendDecimal() {
-    currentOpScreen.textContent += '.';
+    //append decimal only once per number by figuring out what number is and if it has decimal already 
+    //current number is number + decimal + number
+    console.log("currentEquationString in appendDecimal: ", currentEquationString);
+    //const splitCurEqString = currentEquationString.split('+'||'-'||'÷'||'×')
+    const splitCurEqString = currentEquationString.match(/\d+\.\d+|\d+|[^0-9]/g)
+    console.log('splitCurEqString:', splitCurEqString);
+    //get last number of array with [length-1] 
+    const currentNumber = splitCurEqString[splitCurEqString.length - 1];
+    //check if currentNumber has decimal
+    const decimalCheck = currentNumber.includes('.')
+    //if it has decimal, return (do nothing)
+    if (decimalCheck) {
+        return
+    } else {
+        //if it does not have decimal, add decimal
+        currentOpScreen.textContent += '.'
+    } 
 }
 
 pointBtn.addEventListener('click', appendDecimal);
 
-if (currentOpScreen.textContent.includes('.')) {
-    console.log('we have a decimal');
-    pointBtn.removeEventListener('click', appendDecimal)
-} else if (currentOpScreen.textContent.includes('+'||'-')) {
-    pointBtn.addEventListener('click', appendDecimal)
-}
 
-const validValue = /^(\d+(\.\d*)?)?$/.test(currentOpScreen.textContent)
 
-if (!validValue) {
+/*const validValue = /^(\d+(\.\d*)?)?$/.test(currentOpScreen.textContent)
+
+if (validValue) {
     console.log("validValue: ", validValue)
     pointBtn.removeEventListener('click', appendDecimal)
 } else if (currentOpScreen.textContent.includes('+'||'-')) {
     pointBtn.addEventListener('click', appendDecimal)
-}
+}*/
 
 function allClear() {
     currentOpScreen.textContent = '';
@@ -123,14 +138,11 @@ function divide(n1, n2) {
 }
 
 function operate(operator, num1, num2) {
-    console.log("operate called")
     const n1 = Number(num1);
     const n2 = Number(num2);
     if (operator === '÷') {
         tempSolution = (divide(n1, n2))
-        console.log(divide(n1, n2))
-        currentNumberString = tempSolution;
-        console.log("operate's currentNumberString: ", currentNumberString)
+        currentEquationString = tempSolution;
     } else if (operator === '×') {
         tempSolution = (multiply(n1, n2))
     } else if (operator === '+') {
@@ -162,7 +174,6 @@ document.addEventListener('keydown', (event) => {
         currentOpScreen.textContent += event.key;
     }
  })
-
 
 /* function PEMDAS(inputs){
     let modifiedInputs = inputs
