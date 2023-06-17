@@ -71,6 +71,13 @@ function appendDecimal() {
 
 pointBtn.addEventListener('click', appendDecimal);
 
+if (currentOpScreen.textContent.includes('.')) {
+    console.log('we have a decimal');
+    pointBtn.removeEventListener('click', appendDecimal)
+} else if (currentOpScreen.textContent.includes('+'||'-')) {
+    pointBtn.addEventListener('click', appendDecimal)
+}
+
 const validValue = /^(\d+(\.\d*)?)?$/.test(currentOpScreen.textContent)
 
 if (!validValue) {
